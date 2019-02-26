@@ -23,7 +23,7 @@
        
    - name: Smaže instalační soubory
      win_file: 
-      path: {{ desta_dest_office }}
+      path: "{{ cesta_dest_office }}"
       state: absent
 
    - name: Install z Chocolatey - Chrome
