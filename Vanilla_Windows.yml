@@ -25,10 +25,10 @@
  #      product_id: MSOffice
  #      state: present
        
-   - name: Smaže instalační soubory
-     win_file: 
-      path: "{{ cesta_dest_office }}"
-      state: absent
+ #  - name: Smaže instalační soubory
+ #    win_file: 
+ #     path: "{{ cesta_dest_office }}"
+ #     state: absent
 
    - name: Install z Chocolatey - Chrome
      win_chocolatey: 
