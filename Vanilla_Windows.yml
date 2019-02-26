@@ -8,6 +8,7 @@
        path: "{{ cesta_office }}"
        product_id: MSOffice
        state: present
+       arguments: /passive
      vars: 
        ansible_become: yes
        ansible_become_method: runas
