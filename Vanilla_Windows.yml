@@ -3,18 +3,28 @@
   hosts: "{{ seznam_stanic }}"
   
   tasks:
+   - name: Kopírování instalační složky Office
+     win_copy: 
+      src: "{{ cesta_src_office }}"
+      dest: "{{ cesta_dest_office }}"
+      remote_src: yes
+     vars: 
+      ansible_become: yes
+      ansible_become_method: runas
+      ansible_become_user: "{{ superucet }}"
+      ansible_become_pass: "{{ superheslo }}"
+      ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only 
+      
    - name: Nainstaluje Office
      win_package:
        path: "{{ cesta_office }}"
        product_id: MSOffice
        state: present
-       arguments: /passive
-     vars: 
-       ansible_become: yes
-       ansible_become_method: runas
-       ansible_become_user: "{{ superucet }}"
-       ansible_become_pass: "{{ superheslo }}"
-       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+       
+   - name: Smaže instalační soubory
+     win_file: 
+      path: {{ desta_dest_office }}
+      state: absent
 
    - name: Install z Chocolatey - Chrome
      win_chocolatey: 
