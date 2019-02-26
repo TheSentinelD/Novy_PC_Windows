@@ -15,15 +15,16 @@
       ansible_become_pass: "{{ superheslo }}"
       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only 
    
-   - name: Nainstaluje Office
-     win_command: 'C:\Ansible\temp\Windows_Office_autoinstall_64bit\setup.exe'
-   
-   
  #  - name: Nainstaluje Office
- #    win_package:
- #      path: "{{ cesta_office }}"
- #      product_id: MSOffice
- #      state: present
+ #    win_command: 'C:\Ansible\temp\Windows_Office_autoinstall_64bit\setup.exe'
+   
+   
+   - name: Nainstaluje Office
+     win_package:
+       path: "{{ cesta_office }}"
+       product_id: MSOffice
+       expected_return_code: [0, 3010]
+       state: present
        
  #  - name: Smaže instalační soubory
  #    win_file: 
