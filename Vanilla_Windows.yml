@@ -15,11 +15,36 @@
        ansible_become_pass: "{{ superheslo }}"
        ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
 
-   - name: Install z Chocolatey - Chrome, Mozzila, Adobe Reader, 7zip, OpenVPN
+   - name: Install z Chocolatey - Chrome
      win_chocolatey: 
-      name: "{{ aplikace }}"
-      state: "{{ stav }}"
+      name: googlechrome
+      state: present
       
+   - name: Install z Chocolatey - Mozzila Firefox
+     win_chocolatey: 
+      name: firefox
+      state: present
+   
+   - name: Install z Chocolatey - Adobe Reader
+     win_chocolatey: 
+      name: adobereader
+      state: present
+      
+   - name: Install z Chocolatey - 7zip
+     win_chocolatey: 
+      name: 7zip.install
+      state: present
+   
+   - name: Install z Chocolatey - OpenVPN
+     win_chocolatey: 
+      name: OpenVPN
+      state: present
+   
+   - name: Install z Chocolatey - Notepad++
+     win_chocolatey: 
+      name: notepadplusplus
+      state: present
+   
    - name: Přizpůsobení VPN
      win_copy: 
       src: "{{ cesta_src }}"
@@ -32,7 +57,6 @@
       ansible_become_pass: "{{ superheslo }}"
       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only 
 
-      
    - name: "Updatuje Windows"
      win_updates:
        category_names: "{{ kategorie }}"
