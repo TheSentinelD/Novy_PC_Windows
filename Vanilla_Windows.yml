@@ -6,30 +6,33 @@
    - name: Nainstaluje Office
      win_package:
        path: "{{ cesta_office }}"
+       product_id: "{{ MSOffice }}"
+       state: present
+     vars: 
        ansible_become: yes
+       ansible_become_method: runas
        ansible_become_user: "{{ superucet }}"
        ansible_become_pass: "{{ superheslo }}"
-       product_id: "{{ id_produktu }}"
-       state: present
+       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
 
-   - name: Nainstaluje Avast
-     win_package:
-       path: "{{ cesta_avast }}"
-       ansible_become: yes
-       ansible_become_user: "{{ superucet }}"
-       ansible_become_pass: "{{ superheslo }}"
-       product_id: "{{ id_produktu }}"
-       state: present
+   - name: Install z Chocolatey - Chrome, Mozzila, Adobe Reader, 7zip, OpenVPN
+     win_chocolatey: 
+      name: "{{ aplikace }}"
+      state: "{{ stav }}"
+      
+   - name: Přizpůsobení VPN
+     win_copy: 
+      src: "{{ cesta_src }}"
+      dest: "{{ cesta_dest }}"
+      remote_src: yes
+     vars: 
+      ansible_become: yes
+      ansible_become_method: runas
+      ansible_become_user: "{{ superucet }}"
+      ansible_become_pass: "{{ superheslo }}"
+      ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only 
 
-   - name: Nainstaluje Chrome
-     win_package:
-       path: "{{ cesta_chrome }}"
-       ansible_become: yes
-       ansible_become_user: "{{ superucet }}"
-       ansible_become_pass: "{{ superheslo }}"
-       product_id: "{{ id_produktu }}"
-       state: present
-
+      
    - name: "Updatuje Windows"
      win_updates:
        category_names: "{{ kategorie }}"
@@ -37,7 +40,7 @@
      register: win_update_results
      failed_when: win_update_results.failed is defined and win_update_results.failed and win_update_reboot == False
 
-   - name: "Restert, pokud je potřeba"
+   - name: "Restart, pokud je potřeba"
      win_reboot:
        shutdown_timeout_sec: 600
        reboot_timeout_sec: 600
