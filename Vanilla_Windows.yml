@@ -6,7 +6,7 @@
    - name: Nainstaluje Office
      win_package:
        path: "{{ cesta_office }}"
-       product_id: "{{ MSOffice }}"
+       product_id: MSOffice
        state: present
      vars: 
        ansible_become: yes
@@ -59,7 +59,7 @@
 
    - name: "Updatuje Windows"
      win_updates:
-       category_names: "{{ kategorie }}"
+      # category_names: "{{ kategorie }}"
        log_path: "{{ cesta_update_logu }}"      #c:\Ansible\update_log.txt
      register: win_update_results
      failed_when: win_update_results.failed is defined and win_update_results.failed and win_update_reboot == False
