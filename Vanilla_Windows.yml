@@ -26,10 +26,10 @@
        expected_return_code: [0, 3010]
        state: present
        
- #  - name: Smaže instalační soubory
- #    win_file: 
- #     path: "{{ cesta_dest_office }}"
- #     state: absent
+   - name: Smaže instalační soubory
+     win_file: 
+      path: "{{ cesta_dest_office }}"
+      state: absent
 
    - name: Install z Chocolatey - Chrome
      win_chocolatey: 
@@ -83,14 +83,21 @@
       ansible_become_method: runas
       ansible_become_user: "{{ superucet }}"
       ansible_become_pass: "{{ superheslo }}"
-      ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only 
+      ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+      
+   - name: Instalace anglické a české klávesnice
+     win_shell: |
+      $langlist=New-WinUserLanguageList en-US
+      $langlist.Add("en-US")
+      $langlist.Add("cs")
+      Set-WinUserLanguageList -Force $langList
 
- #  - name: "Updatuje Windows"
- #    win_updates:
- #     # category_names: "{{ kategorie }}"
- #      log_path: "{{ cesta_update_logu }}"      #c:\Ansible\update_log.txt
- #    register: win_update_results
- #    failed_when: win_update_results.failed is defined and win_update_results.failed and win_update_reboot == False
+   - name: Updatuje Windows
+     win_updates:
+      # category_names: "{{ kategorie }}"
+       log_path: "{{ cesta_update_logu }}"      #c:\Ansible\update_log.txt
+     register: win_update_results
+     failed_when: win_update_results.failed is defined and win_update_results.failed and win_update_reboot == False
 
  #  - name: "Restart, pokud je potřeba"
  #    win_reboot:
