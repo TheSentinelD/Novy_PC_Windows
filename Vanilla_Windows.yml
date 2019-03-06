@@ -60,6 +60,13 @@
      win_chocolatey: 
       name: notepadplusplus
       state: present
+    
+   - name: Instalace anglické a české klávesnice
+     win_shell: |
+      $langlist=New-WinUserLanguageList en-US
+      $langlist.Add("en-US")
+      $langlist.Add("cs")
+      Set-WinUserLanguageList -Force $langList
    
    - name: Instalace Avast
      win_package:
@@ -84,13 +91,6 @@
       ansible_become_user: "{{ superucet }}"
       ansible_become_pass: "{{ superheslo }}"
       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
-      
-   - name: Instalace anglické a české klávesnice
-     win_shell: |
-      $langlist=New-WinUserLanguageList en-US
-      $langlist.Add("en-US")
-      $langlist.Add("cs")
-      Set-WinUserLanguageList -Force $langList
 
    - name: Updatuje Windows
      win_updates:
