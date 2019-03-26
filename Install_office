@@ -1,3 +1,4 @@
+---
 - name: Instalace Office
   hosts: "{{ seznam_stanic }}"
   tasks: 
