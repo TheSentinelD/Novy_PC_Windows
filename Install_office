@@ -2,7 +2,6 @@
 - name: Instalace Office
   hosts: "{{ seznam_stanic }}"
   tasks: 
-   tasks:
    - name: Kontrola instalace Office
      win_command: reg query "HKEY_CLASSES_ROOT\Word.Application\CurVer"
      ignore_errors: yes
