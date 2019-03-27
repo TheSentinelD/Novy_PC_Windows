@@ -55,7 +55,7 @@
       
    - name: Install z Chocolatey - 7zip
      win_chocolatey: 
-      name: 7zip.install
+      name: 7zip
       state: present
    
    - name: Install z Chocolatey - OpenVPN
