@@ -38,11 +38,11 @@
       path: "{{ cesta_dest_office }}"
       state: absent
       
-   - name: Instalace Chocolatey #pozn. dřív nebylo potřeba, po aktualizaci není Ansible a Chocolatey konpatibilní. časem vyzkoušet bez tohoto a následujícího playe
-     win_command: @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+ #  - name: Instalace Chocolatey #pozn. dřív nebylo potřeba, po aktualizaci není Ansible a Chocolatey konpatibilní. časem vyzkoušet bez tohoto a následujícího playe
+ #    win_command: '@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"'
      
-   - name: Vypnutí pokročilých return kódů chocolatey # dělají neplechu s Ansiblem
-     win_command: choco feature disable --name="'useEnhancedExitCodes'"
+ #  - name: Vypnutí pokročilých return kódů chocolatey # dělají neplechu s Ansiblem
+ #    win_command: choco feature disable --name="'useEnhancedExitCodes'"
 
    - name: Install z Chocolatey - Chrome
      win_chocolatey: 
