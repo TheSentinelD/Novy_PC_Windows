@@ -30,6 +30,13 @@
        product_id: MSOffice
        expected_return_code: [0, 3010]
        state: present
+       remote_src: yes
+     vars: 
+      ansible_become: yes
+      ansible_become_method: runas
+      ansible_become_user: "{{ superucet }}"
+      ansible_become_pass: "{{ superheslo }}"
+      ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
      when: result is failed
        
  #  - name: Smaže instalační soubory
