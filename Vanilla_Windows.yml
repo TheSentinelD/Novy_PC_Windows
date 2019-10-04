@@ -2,41 +2,41 @@
 - name: Instalace vanilla Windows
   hosts: "{{ seznam_stanic }}"
   
-  tasks:
-   - name: Kontrola instalace Office
-     win_command: reg query "HKEY_CLASSES_ROOT\Word.Application\CurVer"
-     ignore_errors: yes
-     register: result
-  
-   - name: Kopírování instalační složky Office
-     win_copy: 
-      src: "{{ cesta_src_office }}"
-      dest: "{{ cesta_dest_office }}"
-      remote_src: yes
-     vars: 
-      ansible_become: yes
-      ansible_become_method: runas
-      ansible_become_user: "{{ superucet }}"
-      ansible_become_pass: "{{ superheslo }}"
-      ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only 
-     when: result is failed
+ # tasks:
+ #  - name: Kontrola instalace Office
+ #    win_command: reg query "HKEY_CLASSES_ROOT\Word.Application\CurVer"
+ #    ignore_errors: yes
+ #    register: result
+ # 
+ #  - name: Kopírování instalační složky Office
+ #    win_copy: 
+ #     src: "{{ cesta_src_office }}"
+ #     dest: "{{ cesta_dest_office }}"
+ #     remote_src: yes
+ #    vars: 
+ #     ansible_become: yes
+ #     ansible_become_method: runas
+ #     ansible_become_user: "{{ superucet }}"
+ #     ansible_become_pass: "{{ superheslo }}"
+ #     ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only 
+ #    when: result is failed
    
  #  - name: Nainstaluje Office
  #    win_command: 'C:\Ansible\temp\Windows_Office_autoinstall_64bit\setup.exe'
    
    
-   - name: Nainstaluje Office
-     win_package:
-       path: "{{ cesta_office }}"
-       product_id: MSOffice
-       expected_return_code: [0, 3010]
-       state: present
-     when: result is failed
+ #  - name: Nainstaluje Office
+ #    win_package:
+ #      path: "{{ cesta_office }}"
+ #      product_id: MSOffice
+ #      expected_return_code: [0, 3010]
+ #      state: present
+ #    when: result is failed
        
-   - name: Smaže instalační soubory
-     win_file: 
-      path: "{{ cesta_dest_office }}"
-      state: absent
+  # - name: Smaže instalační soubory
+  #   win_file: 
+  #    path: "{{ cesta_dest_office }}"
+  #    state: absent
       
  #  - name: Instalace Chocolatey #pozn. dřív nebylo potřeba, po aktualizaci není Ansible a Chocolatey konpatibilní. časem vyzkoušet bez tohoto a následujícího playe
  #    win_command: '@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"'
@@ -72,6 +72,26 @@
    - name: Install z Chocolatey - Notepad++
      win_chocolatey: 
       name: notepadplusplus
+      state: present
+      
+   - name: Install z Chocolatey - Lightshot
+     win_chocolatey: 
+      name: lightshot
+      state: present
+      
+   - name: Install z Chocolatey - Office365
+     win_chocolatey: 
+      name: office365proplus
+      state: present
+      
+   - name: Install z Chocolatey - Teams
+     win_chocolatey: 
+      name: microsoft-teams
+      state: present
+   
+   - name: Install z Chocolatey - Adobe Flash
+     win_chocolatey: 
+      name: flashplayerplugin
       state: present
     
    - name: Instalace anglické a české klávesnice
