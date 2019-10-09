@@ -100,18 +100,6 @@
       $langlist.Add("cs")
       Set-WinUserLanguageList -Force $langList
    
-   - name: Instalace Avast
-     win_package:
-       path: "{{ cesta_instalacniho_souboru }}"
-       product_id: "{{ id_produktu }}"
-       state: present
-     vars: 
-       ansible_become: yes
-       ansible_become_method: runas
-       ansible_become_user: "{{ superucet }}"
-       ansible_become_pass: "{{ superheslo }}"
-       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
-   
    - name: Přizpůsobení VPN
      win_copy: 
       src: "{{ cesta_src }}"
@@ -124,6 +112,19 @@
       ansible_become_pass: "{{ superheslo }}"
       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
 
+   
+   - name: Instalace Avast
+     win_package:
+       path: "{{ cesta_instalacniho_souboru }}"
+       product_id: "{{ id_produktu }}"
+       state: present
+     vars: 
+       ansible_become: yes
+       ansible_become_method: runas
+       ansible_become_user: "{{ superucet }}"
+       ansible_become_pass: "{{ superheslo }}"
+       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+   
  #  - name: Updatuje Windows
  #    win_updates:
       # category_names: "{{ kategorie }}"
