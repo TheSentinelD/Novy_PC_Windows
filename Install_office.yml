@@ -2,10 +2,10 @@
 - name: Instalace Office
   hosts: "{{ seznam_stanic }}"
   tasks: 
-   - name: Kontrola instalace Office
-     win_command: reg query "HKEY_CLASSES_ROOT\Word.Application\CurVer"
-     ignore_errors: yes
-     register: result
+  # - name: Kontrola instalace Office
+  #   win_command: reg query "HKEY_CLASSES_ROOT\Word.Application\CurVer"
+  #   ignore_errors: yes
+  #   register: result
      
    - name: Kopírování instalační složky Office
      win_copy: 
@@ -18,7 +18,7 @@
       ansible_become_user: "{{ superucet }}"
       ansible_become_pass: "{{ superheslo }}"
       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only 
-     when: result is failed
+  #   when: result is failed
      
  #  - name: Nainstaluje Office
  #    win_command: 'C:\Ansible\temp\Windows_Office_autoinstall_64bit\setup.exe'
@@ -37,11 +37,11 @@
       ansible_become_user: "{{ superucet }}"
       ansible_become_pass: "{{ superheslo }}"
       ansible_become_flags: logon_type=new_credentials logon_flags=netcredentials_only
-     when: result is failed
+   #  when: result is failed
        
    - name: Smaže instalační soubory
      win_file: 
       path: "{{ cesta_dest_office }}"
       state: absent
-     when: result is failed
+   #  when: result is failed
      
